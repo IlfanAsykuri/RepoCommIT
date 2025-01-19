@@ -13,7 +13,8 @@ class PdController extends Controller
      */
     public function index()
     {
-
+        $biodata = Biodata::get();
+        return($biodata);
     }
 
     /**
@@ -39,12 +40,12 @@ class PdController extends Controller
             'no_telpon' => 'required|string|max:15',
             'email' => 'required|email|max:100|unique:biodata,email',
             'jenjang_pendidikan_terakhir' => 'required|in:SD,SMP,SMA,D3,S1,S2,S3',
-            'anak_keberapa' => 'required|integer|min:1', 
+            'anak_keberapa' => 'required|integer|min:1',
             'berapa_bersaudara' => 'required|integer|min:1',
-            'kewarganegaraan' => 'required|in:WNI,WNA', 
-            'no_paspor' => 'nullable|integer|unique:biodata,no_paspor', 
+            'kewarganegaraan' => 'required|in:WNI,WNA',
+            'no_paspor' => 'nullable|integer|unique:biodata,no_paspor',
         ]);
-        
+
         $biodata = Biodata::create([
             'nama' => $request->input('nama'),
             'jenis_kelamin' => $request->input('jenis_kelamin'),
@@ -59,11 +60,11 @@ class PdController extends Controller
             'no_paspor' => $request->input('no_paspor'),
         ]);
         Pedatren::create([
-            'id_biodata' => $biodata->id, 
+            'id_biodata' => $biodata->id,
             'anak_keberapa' => $request->input('anak_keberapa'),
-            'berapa_bersaudara' => $request->input('berapa_bersaudara'), 
+            'berapa_bersaudara' => $request->input('berapa_bersaudara'),
         ]);
-    
+
         return redirect('input')->with('success', 'Data berhasil disimpan!');
     }
 
